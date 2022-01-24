@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import styled from 'styled-components';
 
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
@@ -12,6 +12,7 @@ import Message from "./Message";
 
 
 function Chat() {
+  const chatRef = useRef(null);
   const roomId = useSelector(selectRoomId);
   const [roomDetails] = useDocument(
       roomId && db.collection('rooms').doc(roomId),
@@ -21,12 +22,13 @@ function Chat() {
 
   );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    chatRef?.current?.scrollIntoView({behavior: 'smooth'});
+  },[roomId, loading]);
 
   return (
     <ChatContainer>
+
       <>
         <Header>
           <HeaderLeft>
@@ -41,6 +43,7 @@ function Chat() {
             </p>
           </HeaderRight>
         </Header>
+
 
         <ChatMessages>
           {roomMessages?.docs.map(doc => {
@@ -57,9 +60,10 @@ function Chat() {
             )
 
           })}
+          <ChatBottom ref={chatRef}/>
         </ChatMessages>
 
-        <ChatInput channelName={roomDetails?.data().name} channelId={roomId} />
+        <ChatInput chatRef={chatRef} channelName={roomDetails?.data().name} channelId={roomId} />
       </>
     </ChatContainer>
   );
@@ -111,3 +115,7 @@ const ChatContainer = styled.div`
 `;
 
 const ChatMessages = styled.div``;
+
+const ChatBottom = styled.div`
+  padding-bottom: 200px;
+`;
