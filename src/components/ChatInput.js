@@ -1,16 +1,36 @@
+import React, { useState } from 'react';
+
 import { Button } from '@material-ui/core';
-import React from 'react';
 import styled from 'styled-components';
+import {db} from "../firebase";
+import firebase from "firebase/compat/app";
 
 function ChatInput({ channelName, channelId }) {
+  const [input, setInput] = useState('');
+
   const sendMessage = (e) => {
     e.preventDefault(); // Prevent page reload
+
+    if (!channelId) {
+      return false;
+    }
+
+    db.collection('rooms').doc(channelId).collection('messages').add({
+      message: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      user: 'Chad',
+      userImage: 'https://via.placeholder.com/150'
+    });
+
+    setInput('');
+
   };
 
   return (
     <ChatInputContainer>
       <form>
-        <input placeholder={`Message #ROOM`} />
+        <input value={input} placeholder={`Message #${channelName}`} onChange={(e) => setInput(e.target.value)} />
+
         <Button hidden type='submit' onClick={sendMessage}>
           SEND
         </Button>
