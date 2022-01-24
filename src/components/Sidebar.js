@@ -4,7 +4,7 @@ import { db } from '../firebase';
 
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import CreateIcon from '@material-ui/icons/Create';
-import InserCommentIcon from '@material-ui/icons/InsertComment';
+import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -32,7 +32,7 @@ function Sidebar() {
         </SidebarInfo>
         <CreateIcon />
       </SidebarHeader>
-      <SidebarOption Icon={InserCommentIcon} title='Threads' />
+      <SidebarOption Icon={InsertCommentIcon} title='Threads' />
       <SidebarOption Icon={InboxIcon} title='Mentions & reactions' />
       <SidebarOption Icon={DraftsIcon} title='Saved items' />
       <SidebarOption Icon={BookmarkBorderIcon} title='Channel browser' />
